@@ -13,7 +13,8 @@ final int SOIL_COL_COUNT = 8;
 final int SOIL_ROW_COUNT = 24;
 final int SOIL_SIZE = 80;
 
-int[][] soilHealth;
+int[][] soilHealth = new int[SOIL_COL_COUNT][SOIL_ROW_COUNT] ;
+int [][] empty;
 
 final int START_BUTTON_WIDTH = 144;
 final int START_BUTTON_HEIGHT = 60;
@@ -57,6 +58,10 @@ void setup() {
 
 	soilEmpty = loadImage("img/soils/soilEmpty.png");
 
+  //stone 
+  stone1 = loadImage("img/stone1.png");
+  stone2 = loadImage("img/stone2.png");
+
 	// Load soil images used in assign3 if you don't plan to finish requirement #6
 	soil0 = loadImage("img/soil0.png");
 	soil1 = loadImage("img/soil1.png");
@@ -97,6 +102,20 @@ void setup() {
 			soilHealth[i][j] = 15;
 		}
 	}
+
+  int pickNone=0;
+     empty = new int[23][2]; 
+     for(int k=0; k<empty.length; k++){
+       pickNone=floor(random(2))+1;//1,2
+       if(pickNone==1){
+         empty[k][0]=floor(random(8));
+         empty[k][1]=-1;//unexist
+       }
+       if(pickNone==2){
+         empty[k][0]=floor(random(8));
+         empty[k][1]=floor(random(8));//unexist
+       }
+     }
 
 	// Initialize soidiers and their position
 
@@ -163,6 +182,109 @@ void draw() {
 			}
 		}
 
+  
+
+//stone1
+//1-8
+    for(int i=0; i<8; i++){
+        soilHealth[i][i]=30;
+        image(stone1,SOIL_SIZE*i,SOIL_SIZE*i);
+    }
+    
+//9-16 
+    for(int w=0; w<8; w++){
+      if(w%4==1||w%4==2){
+        for(int h=0; h<8; h++){
+          if(h%4==0||h%4==3){
+             soilHealth[w][h+8]=30;
+             image(stone1,w*SOIL_SIZE,h*SOIL_SIZE+SOIL_SIZE*8);
+          }
+        }
+      }
+    }
+    for(int w=0; w<8; w++){
+      if(w%4==0||w%4==3){
+        for(int h=0; h<8; h++){
+          if(h%4==1||h%4==2){
+             soilHealth[w][h+8]=30;
+             image(stone1,w*SOIL_SIZE,h*SOIL_SIZE+SOIL_SIZE*8);
+          }
+        }
+      }
+    }
+    
+//17-24
+//stone1
+    for(int w=0; w<8; w++){
+      if(w%3==1||w%3==2){
+        for(int h=0; h<8; h++){
+           if(h%3==0){
+             soilHealth[w][h+16]=30;
+             image(stone1,w*SOIL_SIZE,h*SOIL_SIZE+SOIL_SIZE*16);
+           }
+        }
+      }
+    }
+    for(int w=0; w<8; w++){
+      if(w%3==0||w%3==1){
+        for(int h=0; h<8; h++){
+           if(h%3==1){
+             soilHealth[w][h+16]=30;
+             image(stone1,w*SOIL_SIZE,h*SOIL_SIZE+SOIL_SIZE*16);
+           }
+        }
+      }
+    }
+    for(int w=0; w<8; w++){
+      if(w%3==0||w%3==2){
+        for(int h=0; h<8; h++){
+           if(h%3==2){
+             soilHealth[w][h+16]=30;
+             image(stone1,w*SOIL_SIZE,h*SOIL_SIZE+SOIL_SIZE*16);
+           }
+        }
+      }
+    }
+//stone2
+   for(int w=0; w<8; w++){
+      if(w%3==2){
+        for(int h=0; h<8; h++){
+           if(h%3==0){
+             soilHealth[w][h+16]=45;
+             image(stone2,w*SOIL_SIZE,h*SOIL_SIZE+SOIL_SIZE*16);
+           }
+        }
+      }
+    }
+    for(int w=0; w<8; w++){
+      if(w%3==1){
+        for(int h=0; h<8; h++){
+           if(h%3==1){
+             soilHealth[w][h+16]=45;
+             image(stone2,w*SOIL_SIZE,h*SOIL_SIZE+SOIL_SIZE*16);
+           }
+        }
+      }
+    }
+    for(int w=0; w<8; w++){
+      if(w%3==0){
+        for(int h=0; h<8; h++){
+           if(h%3==2){
+             soilHealth[w][h+16]=45;
+             image(stone2,w*SOIL_SIZE,h*SOIL_SIZE+SOIL_SIZE*16);
+           }
+        }
+      }
+    }
+   
+     for(int k=0; k<empty.length; k++){
+       image(soilEmpty,empty[k][0]*SOIL_SIZE,(k+1)*SOIL_SIZE);
+       if(empty[k][1]!=-1){
+         image(soilEmpty,empty[k][1]*SOIL_SIZE,(k+1)*SOIL_SIZE); 
+       } 
+    }
+    
+     
 		// Cabbages
 		// > Remember to check if playerHealth is smaller than PLAYER_MAX_HEALTH!
 
